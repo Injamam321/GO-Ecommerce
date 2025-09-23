@@ -17,16 +17,20 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Product struct {
-	ID          int
-	Title       string
-	Description string
-	Price       float64
-	ImgUrl      string
+	ID          int     `json:"id"`
+	Title       string  `json:"title"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	ImgUrl      string  `json:"imageUrl"`
 }
 
 var productList []Product
 
 func getProducts(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+
 	if r.Method != "GET" { //r.method = post, put, patch, delete
 		http.Error(w, "please give me GET request", 400)
 		return
